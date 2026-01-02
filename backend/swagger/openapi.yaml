@@ -1,0 +1,300 @@
+openapi: 3.0.0
+info:
+  title: Racing Management API
+  version: 1.0.0
+  description: API documentation for Teams, Drivers and Races
+ 
+servers:
+  - url: http://127.0.0.1:8000/api
+ 
+paths:
+ 
+  /teams/:
+    get:
+      summary: List all teams
+      tags: [Team]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Team'
+    post:
+      summary: Create a new team
+      tags: [Team]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+              examples:
+              CreateTeam:
+                $ref: "./requests.yaml#/examples/CreateTeam"
+      responses:
+        '201':
+          description: Team created
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yaml#/components/schemas/Team"
+              examples:
+                TeamCreated:
+                  $ref: "./responses.yaml#/examples/TeamResponse"
+ 
+  /teams/{id}/:
+    get:
+      summary: Retrieve a team
+      tags: [Team]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Team detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+ 
+    put:
+      summary: Update a team
+      tags: [Team]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '200':
+          description: Updated
+ 
+    patch:
+      summary: Partial update a team
+      tags: [Team]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Updated
+ 
+    delete:
+      summary: Delete a team
+      tags: [Team]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '204':
+          description: Deleted
+ 
+ 
+  /drivers/:
+    get:
+      summary: List all drivers
+      tags: [Driver]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Driver'
+    post:
+      summary: Create a new driver
+      tags: [Driver]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Driver'
+      responses:
+        '201':
+          description: Driver created
+ 
+  /drivers/{id}/:
+    get:
+      summary: Retrieve a driver
+      tags: [Driver]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Driver detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Driver'
+    put:
+      summary: Update a driver
+      tags: [Driver]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Driver'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      summary: Partial update driver
+      tags: [Driver]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete a driver
+      tags: [Driver]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '204':
+          description: Deleted
+ 
+ 
+  /races/:
+    get:
+      summary: List all races
+      tags: [Race]
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Race'
+    post:
+      summary: Create a new race
+      tags: [Race]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Race'
+      responses:
+        '201':
+          description: Race created
+ 
+  /races/{id}/:
+    get:
+      summary: Retrieve a race
+      tags: [Race]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Race detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Race'
+    put:
+      summary: Update a race
+      tags: [Race]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Race'
+      responses:
+        '200':
+          description: Updated
+    patch:
+      summary: Partial update race
+      tags: [Race]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Updated
+    delete:
+      summary: Delete a race
+      tags: [Race]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        '204':
+          description: Deleted
+ 
+ 
+components:
+  schemas:
+ 
+    Team:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        country: { type: string }
+        founded_year: { type: integer }
+ 
+    Driver:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        age: { type: integer }
+        team: { type: integer }
+ 
+    Race:
+      type: object
+      properties:
+        id: { type: integer }
+        location: { type: string }
+        date: { type: string, format: date }
+        winner: { type: integer }
+ 
